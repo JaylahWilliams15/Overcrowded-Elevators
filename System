@@ -1,0 +1,193 @@
+/**
+ * PartnerLab1
+ */
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class PartnerLab1 {
+
+    public static void main( String[] args) {
+
+        Elevator e1 = new Elevator();
+        Elevator e2 = new Elevator();
+        e1.setWeightLimit(1000);
+        e2.setWeightLimit(800);
+        Scanner s = new Scanner(System.in);
+        System.out.println("Type any charatcer to start adding people to the elevator");
+        while (s.hasNext()) {
+            final String in = s.next();
+            if (in.equalsIgnoreCase("exit")) {
+                break;
+            }
+            System.out.println("Enter the name of the first person to enter elevator 1");
+            final String name = s.next();
+            System.out.println("Enter the weight of the first person to enter elevator 1");
+            final int weight = s.nextInt();
+            final Person person = new Person(name, weight);
+            if (e1.AddPersonInElevator(person)) {
+                System.out.println(
+                        "Person added to elevator 1, type any character to continue");
+            } else {
+                System.out.println("Person could not be added because the current weight limit of elevator 1 is "
+                        + e1.getWeightLimit() + " pounds. Type 'q' to add person to a different elevator");
+                while (!s.hasNext("exit")) {
+                    s.next();
+                    System.out.println("Enter the name of the first person to enter elevator 2");
+                    final String name2 = s.next();
+                    System.out.println("Enter the weight of the first person to enter elevator 2");
+                    final int weight2 = s.nextInt();
+                    final Person person2 = new Person(name2, weight2);
+                    if (e2.AddPersonInElevator(person2)) {
+                        System.out.println(
+                                "Person added to elevator 2, type any character to continue");
+                    } else {
+                        System.out.println(
+                                "Person could not be added because the current weight limit of elevator 2 is"
+                                        + e2.getWeightLimit()
+                                        + " pounds type 'exit' to exit the application or any character to continue");
+                    }
+                }
+            }
+
+        }
+        s.close();
+        System.out.println("Elevator 1 Details: " + e1.toString());
+        if (e1.getPersonInElevatorInfo().size() == 0) {
+            System.out.println("No person in elevator 1");
+        } else {
+            for (final Person person : e1.getPersonInElevatorInfo()) {
+                System.out.println("Person present in elevator 1- " + person.getInfo());
+            }
+        }
+        System.out.println();
+        System.out.println("Elevator 2 Details: " + e2.toString());
+        if (e2.getPersonInElevatorInfo().size() == 0) {
+            System.out.println("No personin elevator 2");
+        } else {
+            for (final Person person : e2.getPersonInElevatorInfo()) {
+                                System.out.println("Person present in elevator 2- "+ person.getInfo());
+                        }
+                }
+
+        }
+
+
+
+    public class Person {
+            private String Name;
+            private int Weight;
+            public Person(final String Name, final int Weight) {
+                this.Name = Name;
+                this.Weight = Weight;
+            }
+
+    /**
+     * @return weight
+     */
+    public int getWeight() {
+                return Weight;
+    }
+
+     /**
+     * @param weight the set weight
+     */
+    public void setWeight(final int weight) {
+                Weight = weight;
+    }
+
+    /**
+     * @return name
+    */
+    public String getName() {
+                return Name;
+    }
+
+    /**
+    * @param name the set name
+    */
+    public void setName(final String name) {
+                Name = name;
+    }
+
+    /**
+     * 
+     * @return the persons name and weight
+     */
+    public String getInfo() {
+                return "The Person's name is: " + this.Name + " and their weight is: " + this.Weight;
+    }
+
+    }
+
+        public class Elevator {
+            private int WeightLimit;
+            private int TotalCurrentWeight;
+            private final ArrayList<Person> PersonInElevator;
+
+            public Elevator() {
+                this.WeightLimit = 0;
+                this.TotalCurrentWeight = 0;
+                PersonInElevator = new ArrayList<Person>();
+            }
+
+            /**
+             * @return the weightLimit
+             */
+            public int getWeightLimit() {
+                return WeightLimit;
+            }
+
+            /**
+             * @param weightLimit the set weight limit
+             * no return 
+             */
+            public void setWeightLimit(final int weightLimit) {
+                WeightLimit = weightLimit;
+            }
+
+            /**
+             * @return  the current total weight
+             */
+            public int getTotalCurrentWeight() {
+                return TotalCurrentWeight;
+            }
+
+            /**
+             * @param totalCurrentWeight the totalCurrentWeight to set
+             * no return
+             */
+            public void setTotalCurrentWeight(final int totalCurrentWeight) {
+                TotalCurrentWeight = totalCurrentWeight;
+            }
+
+           /**
+            * 
+            * @return the person in the elevator
+            */
+            public ArrayList<Person> getPersonInElevatorInfo() {
+                return this.PersonInElevator;
+            }
+
+            /**
+             * 
+             * @param person
+             * @return the person in the elevator if true 
+             */
+            public boolean AddPersonInElevator(final Person person) {
+                if (person.getWeight() + this.TotalCurrentWeight > this.WeightLimit) {
+                    return false;
+                } else {
+                    this.TotalCurrentWeight += person.getWeight();
+                    this.PersonInElevator.add(person);
+                    return true;
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "Elevator total current weight : " + this.TotalCurrentWeight + " and weight limit is : "
+                        + this.WeightLimit;
+            }
+
+        }
+    }
