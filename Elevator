@@ -1,0 +1,74 @@
+import java.util.ArrayList;
+public class Elevator {
+        private int WeightLimit;
+        private int TotalCurrentWeight;
+        private final ArrayList<Person> PersonInElevator;
+
+        public Elevator() {
+            this.WeightLimit = 0;
+            this.TotalCurrentWeight = 0;
+            PersonInElevator = new ArrayList<Person>();
+        }
+
+        /**
+         * @return the weightLimit
+         */
+        public int getWeightLimit() {
+            return WeightLimit;
+        }
+
+        /**
+         * @param weightLimit the set weight limit
+         * no return 
+         */
+        public void setWeightLimit(final int weightLimit) {
+            WeightLimit = weightLimit;
+        }
+
+        /**
+         * @return  the current total weight
+         */
+        public int getTotalCurrentWeight() {
+            return TotalCurrentWeight;
+        }
+
+        /**
+         * @param totalCurrentWeight the totalCurrentWeight to set
+         * no return
+         */
+        public void setTotalCurrentWeight(final int totalCurrentWeight) {
+            TotalCurrentWeight = totalCurrentWeight;
+        }
+
+       /**
+        * 
+        * @return the person in the elevator
+        */
+        public ArrayList<Person> getPersonInElevatorInfo() {
+            return this.PersonInElevator;
+        }
+
+        /**
+         * 
+         * @param person
+         * @return the person in the elevator if true 
+         */
+        public boolean AddPersonInElevator(final Person person) {
+            if (person.getWeight() + this.TotalCurrentWeight > this.WeightLimit) {
+                return false;
+            } else {
+                this.TotalCurrentWeight += person.getWeight();
+                this.PersonInElevator.add(person);
+                return true;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Elevator total current weight : " + this.TotalCurrentWeight + " and weight limit is : "
+                    + this.WeightLimit;
+        }
+
+    }
+
+
