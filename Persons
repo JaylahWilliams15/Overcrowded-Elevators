@@ -1,0 +1,44 @@
+public class Person {
+        private String Name;
+        private int Weight;
+        public Person(final String Name, final int Weight) {
+            this.Name = Name;
+            this.Weight = Weight;
+        }
+
+/**
+ * @return weight
+ */
+public int getWeight() {
+            return Weight;
+}
+
+ /**
+ * @param weight the set weight
+ */
+public void setWeight(final int weight) {
+            Weight = weight;
+}
+
+/**
+ * @return name
+*/
+public String getName() {
+            return Name;
+}
+
+/**
+* @param name the set name
+*/
+public void setName(final String name) {
+            Name = name;
+}
+
+/**
+ * 
+ * @return the persons name and weight
+ */
+public String getInfo() {
+            return "The Person's name is: " + this.Name + " and their weight is: " + this.Weight;
+}
+}
